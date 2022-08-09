@@ -256,6 +256,9 @@ func buildParameter(r restful.Route, restfulParam *restful.Parameter, pattern st
 func buildResponse(e restful.ResponseError, cfg Config) (r spec.Response) {
 	r.Description = e.Message
 	if e.Model != nil {
+		// assert response be json
+		r.Examples["application/json"] = e.Model
+
 		st := reflect.TypeOf(e.Model)
 		if st.Kind() == reflect.Ptr {
 			// For pointer type, use element type as the key; otherwise we'll
